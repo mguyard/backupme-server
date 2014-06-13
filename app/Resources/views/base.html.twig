@@ -2,12 +2,37 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}BackupMe{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap -->
+        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+        <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
+        {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
         {% block stylesheets %}{% endblock %}
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div class="row">
+            <div class="col-xs-1 col-sm-2"></div>
+            <div class="col-xs-10 col-sm-8">
+                <div id="logo">
+                    <img src="{{ asset('bundles/backupmemain/images/BackupMe_Logo.png') }}" width="25%" align="right" class="img-responsive" alt="BackupMe Logo">
+                </div>
+                <div id="Website Title">
+                    <h1>
+                        BackupMe<br>
+                        <small>Easy to save any !</small>
+                    </h1>
+                    {% block body %}{% endblock %}
+                <div>
+            </div>
+            <div class="col-xs-1 col-sm-2"></div>
+        </div>
         {% block javascripts %}{% endblock %}
+        <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
+        <script src="{{ asset('js/jquery.js') }}"></script>
+        <!-- Include all JavaScripts, compiled by Assetic -->
+        <script src="{{ asset('js/bootstrap.js') }}"></script>
     </body>
 </html>
