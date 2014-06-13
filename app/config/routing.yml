@@ -1,0 +1,5 @@
+backup_me_main:
+    resource: "@BackupMeMainBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
