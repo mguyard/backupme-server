@@ -1,7 +1,36 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}BackupMeMainBundle:Company:list{% endblock %}
+{% block title %}{{ parent() }} - Liste des sociétés{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Company:list page</h1>
+<h3><center>Liste des sociétés</center></h3>
+<div class="table-responsive">
+    <table class="table table-hover table-bordered" style="text-align:center;">
+        <thead>
+            <tr>
+                <th style="text-align:center">Nom</th>
+                <th style="text-align:center">Trigramme</th>
+                <th style="text-align:center">Actif ?</th>
+                <th colspan="3" style="text-align:center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for company in companies %}
+                <tr>
+                    <td>{{ company.longName }}</td>
+                    <td>{{ company.shortName }}</td>
+                    {% if company.isActive == true %}
+                        <td class="success"><span class="glyphicon glyphicon-ok"></span></td>
+                    {% else %}
+                        <td class="danger"><span class="glyphicon glyphicon-remove"></span></td>
+                    {% endif %}
+                    <td><a href="{{ path('backupme_main_company_show', {"Id": company.id }) }}"><span class="glyphicon glyphicon-info-sign"></span></a></td>
+                    <td><a href="{{ path('backupme_main_company_edit', {"Id": company.id }) }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                    <td><a href="{{ path('backupme_main_company_delete', {"Id": company.id }) }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <center><a href="{{ path('backupme_main_company_add') }}"><button type="button" class="btn btn-primary">Créer une société</button></a></center>
+</div>
 {% endblock %}

@@ -31,6 +31,11 @@ class CompanyController extends Controller
      */
     public function listAction()
     {
+        $em = $this->getDoctrine()->getEntityManager();
+        $companies = $em->getRepository('BackupMeMainBundle:Company')->findAll();
+        return array(
+                'companies' => $companies
+            );
     }
 
     /**
@@ -56,6 +61,8 @@ class CompanyController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($company);
             $em->flush();
+            $flash = $this->get('braincrafted_bootstrap.flash')->success('La société a était correctement ajoutée.');
+            return $this->redirect($this->generateUrl('backupme_main_company_list'));
         }
 
         return $this->render('BackupMeMainBundle:Company:add.html.twig', array(
