@@ -3,7 +3,11 @@
 {% block title %}{{ parent() }} - Liste des sociétés{% endblock %}
 
 {% block body %}
+{% include '::modal-confirm.html.twig' %}
+
 <h3><center>Liste des sociétés</center></h3>
+{{ form(searchform) }}
+Resultat de recherche : {{ searchresult }}
 <div class="table-responsive">
     <table class="table table-hover table-bordered" style="text-align:center;">
         <thead>
@@ -24,13 +28,30 @@
                     {% else %}
                         <td class="danger"><span class="glyphicon glyphicon-remove"></span></td>
                     {% endif %}
-                    <td><a href="{{ path('backupme_main_company_show', {"Id": company.id }) }}"><span class="glyphicon glyphicon-info-sign"></span></a></td>
-                    <td><a href="{{ path('backupme_main_company_edit', {"Id": company.id }) }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                    <td><a href="{{ path('backupme_main_company_delete', {"Id": company.id }) }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                    <td>
+                        <a href="{{ path('backupme_main_company_show', {'id': company.id }) }}"
+                            ><span class="glyphicon glyphicon-info-sign"></span>
+                        </a>
+                        </td>
+                    <td>
+                        <a href="{{ path('backupme_main_company_edit', {'id': company.id }) }}">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a data-href="{{ path('backupme_main_company_delete', {'id': company.id }) }}" data-toggle="modal" data-target="#confirm-delete" href="#" data-title="Suppression d'une société" data-message="Etes-vous sûr de vouloir supprimer cette société ?">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
     <center><a href="{{ path('backupme_main_company_add') }}"><button type="button" class="btn btn-primary">Créer une société</button></a></center>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/backupmemain/js/backupme_modal_valid_delete.js') }}"></script>
 {% endblock %}

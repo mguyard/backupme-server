@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class CompanyRepository extends EntityRepository
 {
+    public function getSearchCompanyResult($search)
+    {
+        $query = $this->getEntityManager()
+        ->createQuery(
+            'SELECT c
+            FROM BackupMeMainBundle:Company c
+            WHERE c.longName LIKE :search')
+        ->setParameter('search', '%'.$search.'%')
+        ->getResult();
+    }
 }

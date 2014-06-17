@@ -1,7 +1,13 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}BackupMeMainBundle:Company:edit{% endblock %}
+{% block title %}{{ parent() }} - Modification de la société {{ company.longName }}{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Company:edit page</h1>
+<h3>Modification de la société {{ company.longName }}</h3>
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" class="btn btn-success" value="Modifier" />
+    <a href="{{ path('backupme_main_company_list') }}"><button type="button" class="btn btn-danger">Annuler</button></a>
+{{ form_end(form) }}
 {% endblock %}

@@ -4,6 +4,8 @@
         <meta charset="UTF-8" />
         <title>{% block title %}BackupMe{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- JqueryUI -->
+        <!--<link href="{{ asset('bundles/backupmemain/css/jquery-ui-1.10.4.custom.css') }}" rel="stylesheet" media="screen">-->
         <!-- Bootstrap -->
         <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
         <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
@@ -31,10 +33,11 @@
             </div>
             <div class="col-xs-1 col-sm-2"></div>
         </div>
-        {% block javascripts %}{% endblock %}
         <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
         <script src="{{ asset('js/jquery.js') }}"></script>
+        <!--<script src="{{ asset('bundles/backupmemain/js/jquery-ui-1.10.4.custom.js') }}"></script>-->
         <!-- Include all JavaScripts, compiled by Assetic -->
         <script src="{{ asset('js/bootstrap.js') }}"></script>
+        {% block javascripts %}{% endblock %}
     </body>
 </html>
