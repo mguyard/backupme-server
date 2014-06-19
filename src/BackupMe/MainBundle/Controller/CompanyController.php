@@ -32,7 +32,12 @@ class CompanyController extends Controller
     public function listAction(Request $request)
     {
         $form = $this->createFormBuilder()
-            ->add('search', 'search')
+            ->add('search', 'search', array(
+                'label' => false,
+                'attr' => array(
+                        'placeholder' => 'Recherche',
+                    )
+            ))
             ->add('submit', 'submit', array('label' => "Rechercher"))
             ->getForm();
 
@@ -40,17 +45,14 @@ class CompanyController extends Controller
 
         $em = $this->getDoctrine()->getEntityManager();
         if($form->isValid()) {
-            $companies = $this->getDoctrine()->getRepository('BackupMeMainBundle:Company')->getSearchCompanyResult($form->get('search')->getData());
+            $companies = $em->getRepository('BackupMeMainBundle:Company')->getSearchCompanyResult($form->get('search')->getData());
         } else {
             $companies = $em->getRepository('BackupMeMainBundle:Company')->findAll();
         }
 
-        //var_dump($request->request->get('form[search]'));
-        var_dump($form->get('search')->getData());
         return array(
                 'companies' => $companies,
                 'searchform'   => $form->createView(),
-                'searchresult' => $request->request->get('form_search')
             );
     }
 
@@ -69,7 +71,12 @@ class CompanyController extends Controller
     public function addAction(Request $request)
     {
         $company = new Company();
-        $form = $this->createForm(new CompanyType, $company);
+        $form = $this->createForm(new CompanyType, $company)
+            ->add('submit', 'submit', array(
+                'label' => "Enregistrer",
+                'attr' => array(
+                    'class' => "btn btn-success",
+                )));
 
         $form->handleRequest($request);
 
@@ -93,7 +100,18 @@ class CompanyController extends Controller
      */
     public function editAction(Request $request, Company $company)
     {
-        $form = $this->createForm(new CompanyType, $company);
+        $form = $this->createForm(new CompanyType, $company)
+            ->add('submit', 'submit', array(
+                'label' => "Modifier",
+                'attr' => array(
+                    'class' => 'btn btn-success',
+                    'style' => 'margin:5px;margin-left:0px;'
+                )))
+            ->add('cancel', 'button', array(
+                'attr' => array(
+                    'class' => 'btn btn-danger',
+                    'style' => 'margin:5px;'
+                )));
 
         $form->handleRequest($request);
 

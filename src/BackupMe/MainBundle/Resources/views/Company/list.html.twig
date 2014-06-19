@@ -5,9 +5,17 @@
 {% block body %}
 {% include '::modal-confirm.html.twig' %}
 
-<h3><center>Liste des sociétés</center></h3>
-{{ form(searchform) }}
-Resultat de recherche : {{ searchresult }}
+<div id="title" style="text-align:center;">
+    <h3>Liste des sociétés</h3>
+    <a href="{{ path('backupme_main_company_list') }}">
+        <span class="glyphicon glyphicon-refresh"></span>
+    </a>
+</div>
+
+<div class="form-inline" style="margin:20px;text-align:center;">
+    {{ form(searchform) }}
+</div>
+
 <div class="table-responsive">
     <table class="table table-hover table-bordered" style="text-align:center;">
         <thead>

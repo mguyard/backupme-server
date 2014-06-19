@@ -14,12 +14,12 @@ class CompanyRepository extends EntityRepository
 {
     public function getSearchCompanyResult($search)
     {
-        $query = $this->getEntityManager()
-        ->createQuery(
-            'SELECT c
-            FROM BackupMeMainBundle:Company c
-            WHERE c.longName LIKE :search')
-        ->setParameter('search', '%'.$search.'%')
-        ->getResult();
+        $qb = $this->createQueryBuilder('c');
+        $qb->where('c.longName LIKE :search')
+            ->orWhere('c.shortName LIKE :search')
+                ->setParameter('search', '%'.$search.'%');
+
+        return $qb->getQuery()
+                  ->getResult();
     }
 }

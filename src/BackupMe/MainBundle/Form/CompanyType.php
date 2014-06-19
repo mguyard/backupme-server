@@ -18,7 +18,6 @@ class CompanyType extends AbstractType
             ->add('longName', null, array('label' => "Nom complet", 'trim' => true, 'required' => true))
             ->add('shortName', null,array('label' => "Trigramme", 'trim' => true, 'max_length' => '6', 'required' => true))
             ->add('isActive', null, array('label' => "Actif", 'trim' => true, 'required' => false))
-            ->add('submit', 'submit', array('label' => "Enregistrer"))
         ;
     }
 
