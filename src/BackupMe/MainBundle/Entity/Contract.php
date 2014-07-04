@@ -5,6 +5,7 @@ namespace BackupMe\MainBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Contract
@@ -15,12 +16,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Contract
 {
-
-    public function __construct()
-    {
-        $this->isActive = true;
-    }
-
     /**
      * @var integer
      *
@@ -46,6 +41,12 @@ class Contract
     private $name;
 
     /**
+    * @Gedmo\Slug(fields={"name"})
+    * @ORM\Column(name="SlugName", type="string", length=300)
+    */
+    private $slugName;
+
+    /**
      * @ORM\ManyToOne(targetEntity="BackupMe\MainBundle\Entity\Company", inversedBy="contracts")
      * @ORM\JoinColumn(nullable=false)
     */
@@ -59,6 +60,10 @@ class Contract
      */
     private $isActive;
 
+    public function __construct()
+    {
+        $this->isActive = true;
+    }
 
     /**
      * Get id
@@ -137,5 +142,28 @@ class Contract
     public function getCompany()
     {
         return $this->company;
+    }
+
+    /**
+     * Set slugName
+     *
+     * @param string $slugName
+     * @return Contract
+     */
+    public function setSlugName($slugName)
+    {
+        $this->slugName = $slugName;
+
+        return $this;
+    }
+
+    /**
+     * Get slugName
+     *
+     * @return string
+     */
+    public function getSlugName()
+    {
+        return $this->slugName;
     }
 }

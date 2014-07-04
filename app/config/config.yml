@@ -87,3 +87,14 @@ braincrafted_bootstrap:
         variables_file: ~
         bootstrap_output: %kernel.root_dir%/Resources/less/bootstrap.less
         bootstrap_template: BraincraftedBootstrapBundle:Bootstrap:bootstrap.less.twig
+
+# StofDoctrine Extentions
+stof_doctrine_extensions:
+    default_locale: fr_FR
+    orm:
+        default:
+          loggable: false
+          sluggable: true
+          timestampable: false
+          translatable: false
+          tree: false

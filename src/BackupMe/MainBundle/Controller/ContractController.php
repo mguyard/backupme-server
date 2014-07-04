@@ -43,7 +43,7 @@ class ContractController extends Controller
 
         $form->handleRequest($request);
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         if($form->isValid()) {
             $contracts = $em->getRepository('BackupMeMainBundle:Contract')->getSearchContractResult($form->get('search')->getData());
         } else {
@@ -82,7 +82,7 @@ class ContractController extends Controller
         $form->handleRequest($request);
 
         if($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($contract);
             $em->flush();
             $flash = $this->get('braincrafted_bootstrap.flash')->success('Le contrat '.$contract->getName().' a était correctement ajoutée.');
@@ -119,7 +119,7 @@ class ContractController extends Controller
         $form->handleRequest($request);
 
         if($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($contract);
             $em->flush();
             $flash = $this->get('braincrafted_bootstrap.flash')->success('Le contrat '.$contract->getName().' a était correctement modifiée.');
@@ -138,7 +138,7 @@ class ContractController extends Controller
      */
     public function deleteAction(Contract $contract)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $em->remove($contract);
         $em->flush();
         $flash = $this->get('braincrafted_bootstrap.flash')->success('Le contrat '.$contract->getName().' a était correctement supprimée.');

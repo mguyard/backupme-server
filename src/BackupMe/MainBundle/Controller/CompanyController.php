@@ -43,7 +43,7 @@ class CompanyController extends Controller
 
         $form->handleRequest($request);
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         if($form->isValid()) {
             $companies = $em->getRepository('BackupMeMainBundle:Company')->getSearchCompanyResult($form->get('search')->getData());
         } else {
@@ -85,7 +85,7 @@ class CompanyController extends Controller
         $form->handleRequest($request);
 
         if($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($company);
             $em->flush();
             $flash = $this->get('braincrafted_bootstrap.flash')->success('La société '.$company->getLongName().' a était correctement ajoutée.');
@@ -122,7 +122,7 @@ class CompanyController extends Controller
         $form->handleRequest($request);
 
         if($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($company);
             $em->flush();
             $flash = $this->get('braincrafted_bootstrap.flash')->success('La société '.$company->getLongName().' a était correctement modifiée.');
@@ -141,7 +141,7 @@ class CompanyController extends Controller
      */
     public function deleteAction(Company $company)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $em->remove($company);
         $em->flush();
         $flash = $this->get('braincrafted_bootstrap.flash')->success('La société '.$company->getLongName().' a était correctement supprimée.');
