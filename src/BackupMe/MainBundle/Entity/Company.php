@@ -12,7 +12,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="BackupMe\MainBundle\Entity\CompanyRepository")
- * @UniqueEntity(fields={"longName","shortName"}, message="Ce client existe déjà.")
+ * @UniqueEntity(fields="longName", message="Cette société existe déjà.")
+ * @UniqueEntity(fields="shortName", message="Ce trigramme existe déjà.")
  */
 class Company
 {
@@ -29,6 +30,14 @@ class Company
      * @var string
      *
      * @ORM\Column(name="LongName", type="string", length=255, unique=true)
+     * @Assert\NotBlank(message="Ce champ ne peut être vide.")
+     * @Assert\Type(type="string", message="La valeur {{ value }} n'est pas un type {{ type }} valide.")
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "255",
+     *      minMessage = "Le nom de la société doit faire au moins {{ limit }} caractères",
+     *      maxMessage = "Le nom de la société ne peut pas être plus long que {{ limit }} caractères"
+     * )
      */
     private $longName;
 
@@ -36,13 +45,27 @@ class Company
      * @var string
      *
      * @ORM\Column(name="ShortName", type="string", length=6, unique=true)
+     * @Assert\NotBlank(message="Ce champ ne peut être vide.")
+     * @Assert\Type(type="string", message="La valeur {{ value }} n'est pas un type {{ type }} valide.")
+     * @Assert\Length(
+     *      min = "3",
+     *      max = "6",
+     *      minMessage = "Le trigramme de la société doit faire au moins {{ limit }} caractères",
+     *      maxMessage = "Le trigramme de la société ne peut pas être plus long que {{ limit }} caractères"
+     * )
      */
     private $shortName;
+
+    /**
+     * @ORM\OneToMany(targetEntity="BackupMe\MainBundle\Entity\Contract", mappedBy="company", cascade={"remove"})
+    */
+    private $contracts;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="IsActive", type="boolean")
+     * @Assert\Type(type="bool", message="La valeur {{ value }} n'est pas un type {{ type }} valide.")
      */
     private $isActive;
 
@@ -124,5 +147,46 @@ class Company
     public function getIsActive()
     {
         return $this->isActive;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->contracts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->isActive = true;
+    }
+
+    /**
+     * Add contracts
+     *
+     * @param \BackupMe\MainBundle\Entity\Contract $contracts
+     * @return Company
+     */
+    public function addContract(\BackupMe\MainBundle\Entity\Contract $contracts)
+    {
+        $this->contracts[] = $contracts;
+
+        return $this;
+    }
+
+    /**
+     * Remove contracts
+     *
+     * @param \BackupMe\MainBundle\Entity\Contract $contracts
+     */
+    public function removeContract(\BackupMe\MainBundle\Entity\Contract $contracts)
+    {
+        $this->contracts->removeElement($contracts);
+    }
+
+    /**
+     * Get contracts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getContracts()
+    {
+        return $this->contracts;
     }
 }

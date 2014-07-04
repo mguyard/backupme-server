@@ -1,7 +1,34 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}BackupMeMainBundle:Company:show{% endblock %}
+{% block title %}{{ parent() }} - Détail de la société {{ company.longName }}{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Company:show page</h1>
+<h3>Détail de la société <em>{{ company.longName }}</em></h3><br />
+
+<h4>Liste des contrats</h2>
+
+{% if company.contracts.count > 0 %}
+<div class="table-responsive">
+    <table class="table table-hover table-bordered" style="text-align:center;">
+        <thead>
+            <tr>
+                <th style="text-align:center">Nom du contrat</th>
+                <th style="text-align:center">Actif ?</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contract in company.contracts %}
+                <tr>
+                    <td><a href="{{ path('backupme_main_contract_show', {'id': contract.id }) }}">{{ contract.name }}</a></td>
+                    {% if company.isActive == true %}
+                        <td class="success"><span class="glyphicon glyphicon-ok"></span></td>
+                    {% else %}
+                        <td class="danger"><span class="glyphicon glyphicon-remove"></span></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
 {% endblock %}

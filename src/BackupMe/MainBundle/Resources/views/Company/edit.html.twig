@@ -3,7 +3,7 @@
 {% block title %}{{ parent() }} - Modification de la société {{ company.longName }}{% endblock %}
 
 {% block body %}
-<h3>Modification de la société {{ company.longName }}</h3>
+<h3>Modification de la société <em>{{ company.longName }}</em></h3>
 {{ form_start(form) }}
     {{ form_errors(form) }}
     {{ form_widget(form) }}

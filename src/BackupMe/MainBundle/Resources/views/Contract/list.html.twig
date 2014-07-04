@@ -1,13 +1,13 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}{{ parent() }} - Liste des sociétés{% endblock %}
+{% block title %}{{ parent() }} - Liste des contracts{% endblock %}
 
 {% block body %}
 {% include '::modal-confirm.html.twig' %}
 
 <div id="title" style="text-align:center;">
-    <h3>Liste des sociétés</h3>
-    <a href="{{ path('backupme_main_company_list') }}">
+    <h3>Liste des contrats</h3>
+    <a href="{{ path('backupme_main_contract_list') }}">
         <span class="glyphicon glyphicon-refresh"></span>
     </a>
 </div>
@@ -20,34 +20,34 @@
     <table class="table table-hover table-bordered" style="text-align:center;">
         <thead>
             <tr>
-                <th style="text-align:center">Nom</th>
-                <th style="text-align:center">Trigramme</th>
+                <th style="text-align:center">Société</th>
+                <th style="text-align:center">Nom du contrat</th>
                 <th style="text-align:center">Actif ?</th>
                 <th colspan="3" style="text-align:center">Actions</th>
             </tr>
         </thead>
         <tbody>
-            {% for company in companies %}
+            {% for contract in contracts %}
                 <tr>
-                    <td>{{ company.longName }}</td>
-                    <td>{{ company.shortName }}</td>
-                    {% if company.isActive == true %}
+                    <td>{{ contract.company.longName }}</td>
+                    <td>{{ contract.name }}</td>
+                    {% if contract.isActive == true %}
                         <td class="success"><span class="glyphicon glyphicon-ok"></span></td>
                     {% else %}
                         <td class="danger"><span class="glyphicon glyphicon-remove"></span></td>
                     {% endif %}
                     <td>
-                        <a href="{{ path('backupme_main_company_show', {'id': company.id }) }}"
+                        <a href="{{ path('backupme_main_contract_show', {'id': contract.id }) }}"
                             ><span class="glyphicon glyphicon-info-sign"></span>
                         </a>
                         </td>
                     <td>
-                        <a href="{{ path('backupme_main_company_edit', {'id': company.id }) }}">
+                        <a href="{{ path('backupme_main_contract_edit', {'id': contract.id }) }}">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </a>
                     </td>
                     <td>
-                        <a data-href="{{ path('backupme_main_company_delete', {'id': company.id }) }}" data-toggle="modal" data-target="#confirm-delete" href="#" data-title="Suppression d'une société" data-message="Etes-vous sûr de vouloir supprimer cette société et les contrats associés ?">
+                        <a data-href="{{ path('backupme_main_contract_delete', {'id': contract.id }) }}" data-toggle="modal" data-target="#confirm-delete" href="#" data-title="Suppression d'un contrat" data-message="Etes-vous sûr de vouloir supprimer ce contrat ?">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
                     </td>
@@ -55,7 +55,7 @@
             {% endfor %}
         </tbody>
     </table>
-    <center><a href="{{ path('backupme_main_company_add') }}"><button type="button" class="btn btn-primary">Créer une société</button></a></center>
+    <center><a href="{{ path('backupme_main_contract_add') }}"><button type="button" class="btn btn-primary">Créer un contrat</button></a></center>
 </div>
 {% endblock %}
 

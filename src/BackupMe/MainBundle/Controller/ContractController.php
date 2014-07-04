@@ -8,13 +8,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use BackupMe\MainBundle\Entity\Company;
-use BackupMe\MainBundle\Form\CompanyType;
+use BackupMe\MainBundle\Entity\Contract;
+use BackupMe\MainBundle\Form\ContractType;
 
 /**
- * @Route("/company")
+ * @Route("/contract")
  */
-class CompanyController extends Controller
+class ContractController extends Controller
 {
     /**
      * @Route("/")
@@ -22,7 +22,7 @@ class CompanyController extends Controller
      */
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('backupme_main_company_list'), 301);
+        return $this->redirect($this->generateUrl('backupme_main_contract_list'), 301);
     }
 
     /**
@@ -45,26 +45,23 @@ class CompanyController extends Controller
 
         $em = $this->getDoctrine()->getEntityManager();
         if($form->isValid()) {
-            $companies = $em->getRepository('BackupMeMainBundle:Company')->getSearchCompanyResult($form->get('search')->getData());
+            $contracts = $em->getRepository('BackupMeMainBundle:Contract')->getSearchContractResult($form->get('search')->getData());
         } else {
-            $companies = $em->getRepository('BackupMeMainBundle:Company')->findBy(array(), array('longName'=>'asc'));
+            $contracts = $em->getRepository('BackupMeMainBundle:Contract')->findAll();
         }
 
         return array(
-                'companies' => $companies,
+                'contracts' => $contracts,
                 'searchform'   => $form->createView(),
             );
     }
 
     /**
-     * @Route("/show/{id}", requirements={"id" = "\d+"})
+     * @Route("/show")
      * @Template()
      */
-    public function showAction(Company $company)
+    public function showAction()
     {
-        return array(
-            'company' => $company,
-        );
     }
 
     /**
@@ -73,8 +70,8 @@ class CompanyController extends Controller
      */
     public function addAction(Request $request)
     {
-        $company = new Company();
-        $form = $this->createForm(new CompanyType, $company)
+        $contract = new Contract();
+        $form = $this->createForm(new ContractType, $contract)
             ->add('submit', 'submit', array(
                 'label' => "Enregistrer",
                 'attr' => array(
@@ -86,14 +83,14 @@ class CompanyController extends Controller
 
         if($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($company);
+            $em->persist($contract);
             $em->flush();
-            $flash = $this->get('braincrafted_bootstrap.flash')->success('La société '.$company->getLongName().' a était correctement ajoutée.');
-            return $this->redirect($this->generateUrl('backupme_main_company_list'));
+            $flash = $this->get('braincrafted_bootstrap.flash')->success('Le contrat '.$contract->getName().' a était correctement ajoutée.');
+            return $this->redirect($this->generateUrl('backupme_main_contract_list'));
         }
 
         return array(
-            'company' => $company,
+            'contract' => $contract,
             'form'   => $form->createView()
         );
     }
@@ -102,9 +99,9 @@ class CompanyController extends Controller
      * @Route("/edit/{id}", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function editAction(Request $request, Company $company)
+    public function editAction(Request $request, Contract $contract)
     {
-        $form = $this->createForm(new CompanyType, $company)
+        $form = $this->createForm(new ContractType, $contract)
             ->add('submit', 'submit', array(
                 'label' => "Modifier",
                 'attr' => array(
@@ -123,14 +120,14 @@ class CompanyController extends Controller
 
         if($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($company);
+            $em->persist($contract);
             $em->flush();
-            $flash = $this->get('braincrafted_bootstrap.flash')->success('La société '.$company->getLongName().' a était correctement modifiée.');
-            return $this->redirect($this->generateUrl('backupme_main_company_list'));
+            $flash = $this->get('braincrafted_bootstrap.flash')->success('Le contrat '.$contract->getName().' a était correctement modifiée.');
+            return $this->redirect($this->generateUrl('backupme_main_contract_list'));
         }
 
         return array(
-            'company' => $company,
+            'contract' => $contract,
             'form'   => $form->createView()
         );
     }
@@ -139,13 +136,13 @@ class CompanyController extends Controller
      * @Route("/delete/{id}", requirements={"id" = "\d+"})
      * @Template()
      */
-    public function deleteAction(Company $company)
+    public function deleteAction(Contract $contract)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $em->remove($company);
+        $em->remove($contract);
         $em->flush();
-        $flash = $this->get('braincrafted_bootstrap.flash')->success('La société '.$company->getLongName().' a était correctement supprimée.');
-        return $this->redirect($this->generateUrl('backupme_main_company_list'));
+        $flash = $this->get('braincrafted_bootstrap.flash')->success('Le contrat '.$contract->getName().' a était correctement supprimée.');
+        return $this->redirect($this->generateUrl('backupme_main_contract_list'));
     }
 
 }
