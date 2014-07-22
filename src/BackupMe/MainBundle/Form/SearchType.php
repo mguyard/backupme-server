@@ -17,11 +17,17 @@ class SearchType extends AbstractType
         $builder
             ->add('search', 'search', array(
                 'label' => false,
+                'required' => false,
                 'attr' => array(
                     'placeholder' => 'Recherche',
+                    'result' => '5',
+                    'autosave' => 'some_unique_value',
+                    'input_group' => array(
+                        'append' => '.icon-search',
+                    ),
+                    'style' => 'text-align:center',
                 )
             ))
-            ->add('submit', 'submit', array('label' => "Rechercher"))
         ;
     }
 

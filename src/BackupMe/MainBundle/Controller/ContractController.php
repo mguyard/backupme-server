@@ -37,7 +37,7 @@ class ContractController extends Controller
         $form->handleRequest($request);
 
         $em = $this->getDoctrine()->getManager();
-        if($form->isValid()) {
+        if($form->isValid() and ! is_null($form->get('search')->getData() )) {
             $contracts = $em->getRepository('BackupMeMainBundle:Contract')->getSearchContractResult($form->get('search')->getData());
         } else {
             $contracts = $em->getRepository('BackupMeMainBundle:Contract')->findAll();
