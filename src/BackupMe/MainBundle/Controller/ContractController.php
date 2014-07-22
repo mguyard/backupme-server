@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use BackupMe\MainBundle\Entity\Contract;
 use BackupMe\MainBundle\Form\ContractType;
+use BackupMe\MainBundle\Form\SearchType;
 
 /**
  * @Route("/contract")
@@ -31,15 +32,7 @@ class ContractController extends Controller
      */
     public function listAction(Request $request)
     {
-        $form = $this->createFormBuilder()
-            ->add('search', 'search', array(
-                'label' => false,
-                'attr' => array(
-                        'placeholder' => 'Recherche',
-                    )
-            ))
-            ->add('submit', 'submit', array('label' => "Rechercher"))
-            ->getForm();
+        $form = $this->createForm(new SearchType);
 
         $form->handleRequest($request);
 
@@ -71,15 +64,13 @@ class ContractController extends Controller
     public function addAction(Request $request)
     {
         $contract = new Contract();
-        $form = $this->createForm(new ContractType, $contract)
-            ->add('submit', 'submit', array(
-                'label' => "Enregistrer",
-                'attr' => array(
-                    'class' => "btn btn-success",
-                    'formnovalidate' => 'formnovalidate'
-                )));
+        $form = $this->createForm(new ContractType, $contract);
 
         $form->handleRequest($request);
+
+        if ($form->get('cancel')->isClicked()) {
+            return $this->redirect($this->generateUrl('backupme_main_contract_list'));
+        }
 
         if($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -101,22 +92,13 @@ class ContractController extends Controller
      */
     public function editAction(Request $request, Contract $contract)
     {
-        $form = $this->createForm(new ContractType, $contract)
-            ->add('submit', 'submit', array(
-                'label' => "Modifier",
-                'attr' => array(
-                    'class' => 'btn btn-success',
-                    'style' => 'margin:5px;margin-left:0px;',
-                    'formnovalidate' => 'formnovalidate'
-                )))
-            ->add('cancel', 'button', array(
-                'label' => 'Annuler',
-                'attr' => array(
-                    'class' => 'btn btn-danger',
-                    'style' => 'margin:5px;'
-                )));
+        $form = $this->createForm(new ContractType, $contract);
 
         $form->handleRequest($request);
+
+        if ($form->get('cancel')->isClicked()) {
+            return $this->redirect($this->generateUrl('backupme_main_contract_list'));
+        }
 
         if($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
