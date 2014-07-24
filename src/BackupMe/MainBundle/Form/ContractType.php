@@ -26,6 +26,7 @@ class ContractType extends AbstractType
                 'property' => 'longName',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('c')
+                        ->where('c.isActive = true')
                         ->orderBy('c.longName', 'ASC');
                 },
             ))

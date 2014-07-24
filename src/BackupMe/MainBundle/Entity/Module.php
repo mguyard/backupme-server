@@ -44,13 +44,14 @@ class Module
      *
      * @ORM\Column(name="description", type="text")
      * @Assert\NotBlank(message="Ce champ ne peut être vide.")
-     * @Assert\Type(type="text", message="La valeur {{ value }} n'est pas un type {{ type }} valide.")
+     * @Assert\Type(type="string", message="La valeur {{ value }} n'est pas un type {{ type }} valide.")
      */
     private $description;
 
     /**
      * @ORM\ManyToOne(targetEntity="BackupMe\MainBundle\Entity\ModuleType", inversedBy="modules")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="Ce champ ne peut être vide.")
     */
     private $moduletype;
 
@@ -89,7 +90,7 @@ class Module
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = strtoupper($name);
 
         return $this;
     }
@@ -189,7 +190,7 @@ class Module
     /**
      * Get moduletype
      *
-     * @return \BackupMe\MainBundle\Entity\ModuleType 
+     * @return \BackupMe\MainBundle\Entity\ModuleType
      */
     public function getModuletype()
     {

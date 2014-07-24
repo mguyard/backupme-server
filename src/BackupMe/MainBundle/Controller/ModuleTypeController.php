@@ -38,7 +38,7 @@ class ModuleTypeController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         if($form->isValid()) {
-            $moduletypes = $em->getRepository('BackupMeMainBundle:ModuleType')->getSearchCompanyResult($form->get('search')->getData());
+            $moduletypes = $em->getRepository('BackupMeMainBundle:ModuleType')->getSearchModuleTypeResult($form->get('search')->getData());
         } else {
             $moduletypes = $em->getRepository('BackupMeMainBundle:ModuleType')->findBy(array(), array('name'=>'asc'));
         }
@@ -107,7 +107,7 @@ class ModuleTypeController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($moduletype);
             $em->flush();
-            $flash = $this->get('braincrafted_bootstrap.flash')->success('La société '.$moduletype->getName().' a était correctement modifiée.');
+            $flash = $this->get('braincrafted_bootstrap.flash')->success('Le type de module '.$moduletype->getName().' a était correctement modifiée.');
             return $this->redirect($this->generateUrl('backupme_main_moduletype_list'));
         }
 
@@ -126,7 +126,7 @@ class ModuleTypeController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($moduletype);
         $em->flush();
-        $flash = $this->get('braincrafted_bootstrap.flash')->success('La société '.$moduletype->getName().' a était correctement supprimée.');
+        $flash = $this->get('braincrafted_bootstrap.flash')->success('Le type de module '.$moduletype->getName().' a était correctement supprimée.');
         return $this->redirect($this->generateUrl('backupme_main_moduletype_list'));
     }
 

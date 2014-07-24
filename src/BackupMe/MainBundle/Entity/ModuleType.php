@@ -70,7 +70,7 @@ class ModuleType
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = ucfirst($name);
 
         return $this;
     }
@@ -108,7 +108,7 @@ class ModuleType
     /**
      * Get isActive
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsActive()
     {
@@ -141,7 +141,7 @@ class ModuleType
     /**
      * Get modules
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getModules()
     {

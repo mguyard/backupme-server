@@ -49,6 +49,7 @@ class Contract
     /**
      * @ORM\ManyToOne(targetEntity="BackupMe\MainBundle\Entity\Company", inversedBy="contracts")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="Ce champ ne peut être vide.")
     */
     private $company;
 

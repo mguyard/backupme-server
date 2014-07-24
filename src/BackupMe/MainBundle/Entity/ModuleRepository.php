@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ModuleRepository extends EntityRepository
 {
+    public function getSearchModuleResult($search)
+    {
+        $qb = $this->createQueryBuilder('m');
+        $qb->join('m.moduletype', 'mt')
+           ->where('m.name LIKE :search')
+           ->orWhere('m.description LIKE :search')
+           ->orWhere('mt.name LIKE :search')
+           ->setParameter('search', '%'.$search.'%');
+
+        return $qb->getQuery()
+                  ->getResult();
+    }
 }
