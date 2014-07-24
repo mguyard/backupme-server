@@ -1,0 +1,68 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ parent() }} - Liste des Modules{% endblock %}
+
+{% block body %}
+{% include '::modal-confirm.html.twig' %}
+
+<div id="title" style="text-align:center;">
+    <h3>Liste des Modules</h3>
+</div>
+
+{% include "::search.html.twig" %}
+
+<div class="table-responsive">
+    <table class="table table-hover table-bordered" style="text-align:center;">
+        <thead>
+            <tr>
+                <th style="text-align:center">Nom</th>
+                <th style="text-align:center">Description</th>
+                <th style="text-align:center">Type de module</th>
+                <th style="text-align:center">Beta ?</th>
+                <th style="text-align:center">Actif ?</th>
+                <th colspan="3" style="text-align:center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for module in modules %}
+                <tr>
+                    <td>{{ module.name }}</td>
+                    <td>{{ module.description|slice(0,50) }}...</td>
+                    <td>{{ module.moduletype.name }}</td>
+                    {% if module.isBeta == true %}
+                        <td class="danger"><span class="glyphicon glyphicon-warning-sign"></span></td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    {% if module.isActive == true %}
+                        <td class="success"><span class="glyphicon glyphicon-ok"></span></td>
+                    {% else %}
+                        <td class="danger"><span class="glyphicon glyphicon-remove"></span></td>
+                    {% endif %}
+                    <td>
+                        <a href="{{ path('backupme_main_module_show', {'id': module.id }) }}"
+                            ><span class="glyphicon glyphicon-info-sign"></span>
+                        </a>
+                        </td>
+                    <td>
+                        <a href="{{ path('backupme_main_module_edit', {'id': module.id }) }}">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a data-href="{{ path('backupme_main_module_delete', {'id': module.id }) }}" data-toggle="modal" data-target="#confirm-delete" href="#" data-title="Suppression d'un module" data-message="Etes-vous sûr de vouloir supprimer ce module et le d'associés des configurations en place ?">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <center><a href="{{ path('backupme_main_module_add') }}"><button type="button" class="btn btn-primary">Créer un module</button></a></center>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/backupmemain/js/backupme_modal_valid_delete.js') }}"></script>
+{% endblock %}
