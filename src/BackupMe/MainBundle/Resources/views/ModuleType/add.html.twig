@@ -1,0 +1,11 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ parent() }} - Ajout d'un type de module{% endblock %}
+
+{% block body %}
+<h3>Ajout d'un type de module</h3>
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+{{ form_end(form) }}
+{% endblock %}

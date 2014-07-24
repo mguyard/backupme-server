@@ -48,7 +48,7 @@ class ApiClient
     /**
      * @var string
      *
-     * @ORM\Column(name="IPAdress", type="string", length=255)
+     * @ORM\Column(name="IPAdress", type="string", length=255, unique=true)
      * @Assert\NotBlank(message="Ce champ ne peut être vide.")
      * @Assert\Ip(
      *      version = "all",
