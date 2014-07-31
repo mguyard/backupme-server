@@ -31,6 +31,8 @@ class ModuleType extends AbstractType
                         ->where('mt.isActive = true')
                         ->orderBy('mt.name', 'ASC');
                 },
+                'empty_value' => 'Choisissez un type de module...',
+                'required' => true,
                 'attr' => array(
                     'class' => "chosen-select",
                 ),

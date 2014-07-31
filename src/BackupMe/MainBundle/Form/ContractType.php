@@ -29,6 +29,8 @@ class ContractType extends AbstractType
                         ->where('c.isActive = true')
                         ->orderBy('c.longName', 'ASC');
                 },
+                'empty_value' => 'Choisissez une société...',
+                'required' => true,
                 'attr' => array(
                     'class' => "chosen-select",
                 ),
