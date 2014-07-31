@@ -49,7 +49,7 @@ Créez votre base de donnée
 
 Installer les ressources (Image/CSS/JS)
 
-    php app/console doctrine:schema:create
+    php app/console assets:install
 
 Enjoy!
 
