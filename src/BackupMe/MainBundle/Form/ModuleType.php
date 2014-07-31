@@ -31,6 +31,9 @@ class ModuleType extends AbstractType
                         ->where('mt.isActive = true')
                         ->orderBy('mt.name', 'ASC');
                 },
+                'attr' => array(
+                    'class' => "chosen-select",
+                ),
             ))
             ->add('isBeta', null, array('label' => "Beta Test", 'trim' => true, 'required' => false))
             ->add('isActive', null, array('label' => "Actif", 'trim' => true, 'required' => false))

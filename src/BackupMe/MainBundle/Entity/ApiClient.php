@@ -77,6 +77,14 @@ class ApiClient
     private $isActive;
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->isActive = true;
+    }
+
+    /**
      * Get id
      *
      * @return integer

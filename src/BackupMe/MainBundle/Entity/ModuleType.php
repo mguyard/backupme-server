@@ -90,6 +90,7 @@ class ModuleType
     public function __construct()
     {
         $this->modules = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->isActive = true;
     }
 
     /**
