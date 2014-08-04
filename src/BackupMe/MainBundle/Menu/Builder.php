@@ -17,6 +17,9 @@ class Builder extends ContainerAware
         $menu->addChild('Contrats', array('uri' => '#'));
             $menu['Contrats']->addChild('Liste des contrats', array('route' => 'backupme_main_contract_list'));
             $menu['Contrats']->addChild('Ajouter un contrat', array('route' => 'backupme_main_contract_add'));
+        $menu->addChild('Sites', array('uri' => '#'));
+            $menu['Sites']->addChild('Liste des sites', array('route' => 'backupme_main_location_list'));
+            $menu['Sites']->addChild('Ajouter un sites', array('route' => 'backupme_main_location_add'));
         $menu->addChild('BackupMe Agent', array('uri' => '#'));
             $menu['BackupMe Agent']->addChild('Liste des Agents', array('route' => 'backupme_main_apiclientinternal_list'));
             $menu['BackupMe Agent']->addChild('Ajouter un Agent', array('route' => 'backupme_main_apiclientinternal_add'));

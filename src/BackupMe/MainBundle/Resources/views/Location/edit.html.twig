@@ -1,0 +1,11 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ parent() }} - Modification du site {{ location.Name }}{% endblock %}
+
+{% block body %}
+<h3>Modification du site <em>{{ location.name }}</em></h3>
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+{{ form_end(form) }}
+{% endblock %}

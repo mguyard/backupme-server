@@ -41,7 +41,7 @@ class Contract
     private $name;
 
     /**
-    * @Gedmo\Slug(fields={"name"})
+    * @Gedmo\Slug(fields={"name"}, style="camel", unique=false)
     * @ORM\Column(name="SlugName", type="string", length=300)
     */
     private $slugName;
@@ -54,6 +54,11 @@ class Contract
     private $company;
 
     /**
+     * @ORM\OneToMany(targetEntity="BackupMe\MainBundle\Entity\Location", mappedBy="contract", cascade={"remove"})
+    */
+    private $locations;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="IsActive", type="boolean")
@@ -64,6 +69,11 @@ class Contract
     public function __construct()
     {
         $this->isActive = true;
+    }
+
+    public function __toString()
+    {
+        return $this->company->getLongName()." / ".$this->getName();
     }
 
     /**
@@ -166,5 +176,38 @@ class Contract
     public function getSlugName()
     {
         return $this->slugName;
+    }
+
+    /**
+     * Add locations
+     *
+     * @param \BackupMe\MainBundle\Entity\Location $locations
+     * @return Contract
+     */
+    public function addLocation(\BackupMe\MainBundle\Entity\Location $locations)
+    {
+        $this->locations[] = $locations;
+
+        return $this;
+    }
+
+    /**
+     * Remove locations
+     *
+     * @param \BackupMe\MainBundle\Entity\Location $locations
+     */
+    public function removeLocation(\BackupMe\MainBundle\Entity\Location $locations)
+    {
+        $this->locations->removeElement($locations);
+    }
+
+    /**
+     * Get locations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLocations()
+    {
+        return $this->locations;
     }
 }
