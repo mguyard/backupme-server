@@ -21,8 +21,11 @@ class Builder extends ContainerAware
             $menu['Sites']->addChild('Liste des sites', array('route' => 'backupme_main_location_list'));
             $menu['Sites']->addChild('Ajouter un sites', array('route' => 'backupme_main_location_add'));
         $menu->addChild('BackupMe Agent', array('uri' => '#'));
-            $menu['BackupMe Agent']->addChild('Liste des Agents', array('route' => 'backupme_main_apiclientinternal_list'));
-            $menu['BackupMe Agent']->addChild('Ajouter un Agent', array('route' => 'backupme_main_apiclientinternal_add'));
+            $menu['BackupMe Agent']->addChild('Liste des agents', array('route' => 'backupme_main_apiclientinternal_list'));
+            $menu['BackupMe Agent']->addChild('Ajouter un agent', array('route' => 'backupme_main_apiclientinternal_add'));
+        $menu->addChild('Contacts', array('uri' => '#'));
+            $menu['Contacts']->addChild('Liste des contacts', array('route' => 'backupme_main_contact_list'));
+            $menu['Contacts']->addChild('Ajouter un contact', array('route' => 'backupme_main_contact_add'));
         $menu->addChild('Modules', array('uri' => '#'));
             $menu['Modules']->addChild('Liste des types de module', array('route' => 'backupme_main_moduletype_list'));
             $menu['Modules']->addChild('Ajouter un type de module', array('route' => 'backupme_main_moduletype_add'));

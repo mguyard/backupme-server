@@ -1,0 +1,60 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ parent() }} - Liste des contacts{% endblock %}
+
+{% block body %}
+{% include '::modal-confirm.html.twig' %}
+
+<div id="title" style="text-align:center;">
+    <h3>Liste des contacts</h3>
+</div>
+
+{% include "::search.html.twig" %}
+
+<div class="table-responsive">
+    <table class="table table-hover table-bordered" style="text-align:center;">
+        <thead>
+            <tr>
+                <th style="text-align:center">Nom du contact</th>
+                <th style="text-align:center">Email</th>
+                <th style="text-align:center">Actif ?</th>
+                <th colspan="3" style="text-align:center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contact in contacts %}
+                <tr>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.email }}</td>
+                    {% if contact.isActive == true %}
+                        <td class="success"><span class="glyphicon glyphicon-ok"></span></td>
+                    {% else %}
+                        <td class="danger"><span class="glyphicon glyphicon-remove"></span></td>
+                    {% endif %}
+                    <td>
+                        <a href="{{ path('backupme_main_contact_show', {'id': contact.id }) }}"
+                            ><span class="glyphicon glyphicon-info-sign"></span>
+                        </a>
+                        </td>
+                    <td>
+                        <a href="{{ path('backupme_main_contact_edit', {'id': contact.id }) }}">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a data-href="{{ path('backupme_main_contact_delete', {'id': contact.id }) }}" data-toggle="modal" data-target="#confirm-delete" href="#" data-title="Suppression d'un contact" data-message="Etes-vous sûr de vouloir supprimer ce contact ?">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <center><a href="{{ path('backupme_main_contact_add') }}"><button type="button" class="btn btn-primary">Créer un contact</button></a></center>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/backupmemain/js/backupme_modal_valid_delete.js') }}"></script>
+{% endblock %}

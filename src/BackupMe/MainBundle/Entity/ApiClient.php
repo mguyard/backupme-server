@@ -77,6 +77,11 @@ class ApiClient
     private $isActive;
 
     /**
+    * @ORM\ManyToMany(targetEntity="BackupMe\MainBundle\Entity\Contact", inversedBy="ApiClients", cascade={"persist"})
+    */
+    private $contacts;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -186,5 +191,38 @@ class ApiClient
     public function getIPAddress()
     {
         return $this->iPAddress;
+    }
+
+    /**
+     * Add contacts
+     *
+     * @param \BackupMe\MainBundle\Entity\Contact $contacts
+     * @return ApiClient
+     */
+    public function addContact(\BackupMe\MainBundle\Entity\Contact $contacts)
+    {
+        $this->contacts[] = $contacts;
+
+        return $this;
+    }
+
+    /**
+     * Remove contacts
+     *
+     * @param \BackupMe\MainBundle\Entity\Contact $contacts
+     */
+    public function removeContact(\BackupMe\MainBundle\Entity\Contact $contacts)
+    {
+        $this->contacts->removeElement($contacts);
+    }
+
+    /**
+     * Get contacts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getContacts()
+    {
+        return $this->contacts;
     }
 }

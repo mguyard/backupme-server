@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormEvents;
 
 use Doctrine\ORM\EntityRepository;
 
-class ApiClientInternalType extends AbstractType
+class ContactType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -20,25 +20,9 @@ class ApiClientInternalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type', 'hidden', array('label' => "Type de client", 'required' => true, 'data' => 'internal'))
-            ->add('name', null, array('label' => 'Nom FQDN', 'trim' => true, 'required' => true))
-            ->add('iPAddress', null, array('label' => 'Adresse IP', 'trim' => true, 'required' => true, 'max_length' => '15'))
+            ->add('name', null, array('label' => "Nom du contact", 'trim' => true, 'required' => true))
+            ->add('email', null, array('label' => "Email", 'trim' => true, 'required' => true))
             ->add('isActive', null, array('label' => "Actif", 'trim' => true, 'required' => false))
-            ->add('contacts', 'entity', array(
-                'label' => "Contacts",
-                'class' => 'BackupMeMainBundle:Contact',
-                'multiple' => true,
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('cc')
-                        ->where('cc.isActive = true')
-                        ->orderBy('cc.name', 'ASC');
-                },
-                'required' => false,
-                'attr' => array(
-                    'class' => "chosen-select",
-                    'data-placeholder' => 'Choisissez les contacts',
-                ),
-            ))
             ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
             ->add('cancel', 'submit', array('label' => "Annuler",'attr' => array('class' => "btn btn-danger",'formnovalidate' => 'formnovalidate')))
         ;
@@ -46,12 +30,12 @@ class ApiClientInternalType extends AbstractType
 
     public function onPreSetData(FormEvent $event)
     {
-        $apiclient_internal = $event->getData();
+        $contact = $event->getData();
         $form = $event->getForm();
-        // vérifie si l'objet apiclient_internal est "nouveau"
+        // vérifie si l'objet Contact est "nouveau"
         // Si aucune donnée n'est passée au formulaire, la donnée est "null".
-        // Ce doit être considéré comme un nouveau "apiclient_internal"
-        if (!$apiclient_internal || null === $apiclient_internal->getId()) {
+        // Ce doit être considéré comme un nouveau "Contact"
+        if (!$contact || null === $contact->getId()) {
             $submit_label = "Enregistrer";
         } else {
             $submit_label = "Modifier";
@@ -65,7 +49,7 @@ class ApiClientInternalType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BackupMe\MainBundle\Entity\ApiClient'
+            'data_class' => 'BackupMe\MainBundle\Entity\Contact'
         ));
     }
 
@@ -74,6 +58,6 @@ class ApiClientInternalType extends AbstractType
      */
     public function getName()
     {
-        return 'backupme_mainbundle_apiclientinternal';
+        return 'backupme_mainbundle_contact';
     }
 }
